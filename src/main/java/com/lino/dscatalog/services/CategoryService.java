@@ -1,10 +1,14 @@
 package com.lino.dscatalog.services;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.lino.dscatalog.dto.CategoryDTO;
 import com.lino.dscatalog.entities.Category;
 import com.lino.dscatalog.repositories.CategoryRepository;
 
@@ -13,11 +17,21 @@ public class CategoryService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
-	public List<Category> findAll(){
-		
+
+	@Transactional(readOnly = true)
+	public List<CategoryDTO> findAll() {
+
 		List<Category> list = categoryRepository.findAll();
-		return list;
+		return  list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 	}
+
+	@Transactional(readOnly = true)
+	public CategoryDTO findById(Long id) {
+
+		Optional<Category> obj = categoryRepository.findById(id);
+		Category entity = obj.get();
+		return new CategoryDTO(entity);
 	
+	}
+
 }
