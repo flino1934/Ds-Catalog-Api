@@ -1,4 +1,4 @@
-package com.lino.dscatalog.resources;
+package com.lino.dscatalog.controller;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.lino.dscatalog.services.CategoryService;
 
 @RestController
 @RequestMapping(value = "/categories")
-public class CategoryResources {
+public class CategoryController {
 
 	@Autowired
 	private CategoryService categoryService;
@@ -32,7 +32,6 @@ public class CategoryResources {
 	public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
 		
 		CategoryDTO dto = categoryService.findById(id);
-
 		return ResponseEntity.ok().body(dto);
 
 	}
