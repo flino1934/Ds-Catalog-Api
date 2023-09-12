@@ -23,7 +23,7 @@ public class CategoryService {
 	public List<CategoryDTO> findAll() {
 
 		List<Category> list = categoryRepository.findAll();
-		return  list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+		return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
@@ -32,7 +32,18 @@ public class CategoryService {
 		Optional<Category> obj = categoryRepository.findById(id);
 		Category entity = obj.orElseThrow(() -> new ResourceNotFoundExceptions("Entity not found!! "));
 		return new CategoryDTO(entity);
-	
+
+	}
+
+	@Transactional
+	public CategoryDTO insert(CategoryDTO dto) {
+		// TODO Auto-generated method stub
+
+		Category category = new Category();
+		category.setName(dto.getName());
+		category = categoryRepository.save(category);
+
+		return new CategoryDTO(category);
 	}
 
 }
