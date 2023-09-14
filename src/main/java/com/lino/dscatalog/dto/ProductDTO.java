@@ -13,6 +13,7 @@ public class ProductDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	private String name;
 	private String description;
 	private Double price;
@@ -22,10 +23,11 @@ public class ProductDTO implements Serializable {
 	private List<CategoryDTO> categories = new ArrayList<>();
 
 	public ProductDTO() {
-		// TODO Auto-generated constructor stub
+
 	}
 
-	public ProductDTO(String name, String description, Double price, String imgUrl, Instant date) {
+	public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -34,6 +36,7 @@ public class ProductDTO implements Serializable {
 	}
 
 	public ProductDTO(Product entity) {
+		this.id = entity.getId();
 		this.name = entity.getName();
 		this.description = entity.getDescription();
 		this.price = entity.getPrice();
@@ -44,6 +47,14 @@ public class ProductDTO implements Serializable {
 	public ProductDTO(Product entity, Set<Category> categories) {
 		this(entity);
 		categories.forEach(cat -> this.categories.add(new CategoryDTO(cat)));
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -88,6 +99,10 @@ public class ProductDTO implements Serializable {
 
 	public List<CategoryDTO> getCategories() {
 		return categories;
+	}
+
+	public void setCategories(List<CategoryDTO> categories) {
+		this.categories = categories;
 	}
 
 }
